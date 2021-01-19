@@ -1,0 +1,38 @@
+*創建git 倉庫
+
+ import git
+ repo = git.Repo.init(path='.')
+
+*Clone
+ Clone a repository into a new directory	
+ git clone http://192.168.1.2:10000/kenny/IES_DB.git
+
+ 若想Clone 到其他名字的資料夾，只需要再多指定一個參數即可：
+ git clone http://192.168.1.2:10000/daniel/WEB_DB.git myWebDB
+ git clone http://192.168.1.2:10000/daniel/Product.git gitProduct
+
+*myIES  為資料夾名稱
+ 查看目前分支
+ git branch 
+ Git checkout 切換 branch
+ 
+ git checkout 36bc7f799a  =>請使用這個指令，用head抓取最新的版本
+
+ git checkout branch-name # 切換到 branch-name
+ git checkout master # 切換到 master
+ git checkout HEAD . # 將所有檔案都 checkout 出來(最後一次 commit 的版本), 注意, 若有修改的檔案都會被還原到上一版. (git checkout -f 亦可)
+ git checkout xxxx . # 將所有檔案都 checkout 出來(xxxx commit 的版本, xxxx 是 commit 的編號前四碼), 注意, 若有修改的檔案都會被還原到上一版.
+ git checkout -- * # 恢復到上一次 Commit 的狀態(* 改成檔名, 就可以只恢復那個檔案)
+ git checkout -b new-branch master # 從 master 建立新的 new-branch, 並同時切換過去 new-branch
+ git checkout -b newbranch # 由現在的環境為基礎, 建立新的 branch
+ git checkout -b newbranch origin # 於 origin 的基礎, 建立新的 branch
+ git checkout filename # 還原檔案到 Repository 狀態
+ 
+ *操作指令
+ git branch 	#查詢
+ git branch  release/2.4.0
+ git checkout  release/2.4.6
+ git fetch  # Download objects and refs from another repository
+ git checkout HEAD . # (最後一次 commit 的版本)
+ git checkout 7e77bf7a4f  #跳到指針所指位置
+ 
