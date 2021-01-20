@@ -1,5 +1,8 @@
 # 一開始一定要使用 Clone，抓下全部的資料
 
+*查看遠端數據庫清單
+ git remote
+
 *Clone 
  Clone a repository into a new directory	
  git clone http://192.168.1.2:10000/kenny/IES_DB.git
