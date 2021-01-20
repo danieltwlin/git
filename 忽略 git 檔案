@@ -1,0 +1,77 @@
+設定忽略的檔案
+
+只要在專案目錄裡放一個 .gitignore 檔案，並且設定想要忽略的規則就行了。如果這個檔案不存在，就手動新增它：
+
+nano .gitignore
+
+# 檔案名稱 .gitignore
+
+# 忽略 secret.yml 檔案
+secret.yml
+
+# 忽略 config 目錄下的 database.yml 檔案
+config/database.yml
+
+# 忽略所有 db 目錄下附檔名是 .sqlite3 的檔案
+/db/*.sqlite3
+
+# 忽略所有附檔名是 .tmp 的檔案
+*.tmp
+
+# 當然你要忽略自己也可以，只是通常不會這麼做
+# .gitignore
+
+
+
+只要 .gitignore 這個檔案存在，即使這個檔案沒被 Commit 或是沒被 Push 上 Git Server 就會有效果。
+但這個檔案會建議 Commit 進專案並且推上 Git Server，這樣一來整個專案一起開發的人可以共享相同的設定。 
+在新增檔案的時候，一旦只要符合 .gitignore 檔案裡的規定，這個檔案就會被忽視。
+
+例如，現在的狀態是剛剛 Commit 完，暫存區跟工作目錄都是乾淨的：
+$ git status
+On branch master
+nothing to commit, working tree clean
+ 
+這時候，故意加入會被忽略的檔案 secret.yml：
+$ touch secret.yml
+ 
+再看一下狀態：
+$ git status
+On branch master
+nothing to commit, working tree clean
+ 
+這個檔案雖然現在確實存在這個目錄裡，但 Git 已經感應不到它了，也就是說它被 Git 無視了。
+如果你不知道你在使用的工具或程式語言通常會忽略哪些檔案，GitHub 上有整理了一份各種程式語言常見的 .gitignore 檔案。
+
+網址： https://github.com/github/gitignore
+
+可以忽略這個忽略嗎？
+雖然 .gitignore 這個檔案有列了一些忽略的規則，但其實也是可以忽略這個忽略的規則。只要在 git add 的時候再加上 -f 的參數：
+$ git add -f 檔案名稱
+ 
+就可以無視規則，強迫闖關。
+
+以上面這個例子來說，這個專案裡剛好有個 config 目錄，裡面剛好有個 database.yml 檔，完全符合被忽略的規則。
+所以照理說這個修改應該要被無視，但編輯 database.yml 之後卻會發現：
+
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+  modified:   config/database.yml
+ 
+狀態變成 modified 了
+這是因為這是 .gitignore 檔案設定的規則，只對在規則設定之後的有效，
+那些已經存在的檔案就像既得利益者一樣，這些規則是對他們沒有效果的。
+
+如果想套用 .gitignore 的規則，就必須先使用 git rm --cached 指令把這些既得利益者請出 Git，移出 Git 控管之後，它就會開始會被忽略了。
+
+*該如何清除忽略的檔案？
+
+如果想要一口氣清除那些已經被忽略的檔案，可以使用 git clean 指令並配合 -X 參數：
+$ git clean -fX
+ 
+那個 -f 參數是指強制刪除的意思，這樣一來就可清除被忽略的檔案。
+
